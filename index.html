@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AIEDU - AI Learning Platform</title>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+  <!-- Three.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+  <!-- Remix Icons -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body class="grid-bg">
+
+  <!-- BLUR EFFECTS -->
+
+  <div class="blur-ball bg-purple-500 top-0 left-0"></div>
+  <div class="blur-ball bg-blue-500 bottom-0 right-0"></div>
+
+  <!-- NAVBAR -->
+
+  <nav class="fixed top-5 left-1/2 -translate-x-1/2 z-50 w-[92%] max-w-7xl">
+
+    <div class="glass rounded-full px-8 py-5 flex items-center justify-between glow">
+
+      <!-- LOGO -->
+
+      <div class="flex items-center gap-3">
+
+        <div class="w-12 h-12 rounded-2xl bg-gradient-to-r from-cyan-500 to-purple-600 flex items-center justify-center text-2xl">
+          <i class="ri-quill-pen-ai-fill"></i>
+        </div>
+
+        <h1 class="text-3xl font-black gradient-text">
+          AIEDU
+        </h1>
+
+      </div>
+
+      <!-- MENU -->
+
+      <ul class="hidden md:flex items-center gap-10 text-gray-300 font-medium">
+
+        <li class="text-cyan-400 cursor-pointer">Home</li>
+        <li class="hover:text-cyan-400 transition cursor-pointer">Features</li>
+        <li class="hover:text-cyan-400 transition cursor-pointer">How It Works</li>
+        <li class="hover:text-cyan-400 transition cursor-pointer">About</li>
+        <li class="hover:text-cyan-400 transition cursor-pointer">Contact</li>
+
+      </ul>
+
+      <!-- BUTTON -->
+
+      <button class="px-8 py-3 rounded-full bg-gradient-to-r from-cyan-500 to-purple-600 font-bold hover:scale-105 transition duration-300 glow">
+        Get Started
+      </button>
+
+    </div>
+
+  </nav>
+
+  <!-- HERO SECTION -->
+
+  <section class="min-h-screen flex items-center justify-center px-6 pt-40 pb-20 relative overflow-hidden">
+
+    <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-20 items-center">
+
+      <!-- LEFT -->
+
+      <div>
+
+        <p class="text-cyan-400 uppercase tracking-[5px] mb-6 text-lg">
+          AI Powered Learning
+        </p>
+
+        <h1 class="text-6xl md:text-8xl font-black leading-none mb-8">
+
+          Draw Your
+          <br>
+
+          <span class="gradient-text">
+            Problem.
+          </span>
+
+          <br>
+
+          Let AI Solve It.
+
+        </h1>
+
+        <p class="text-gray-300 text-xl leading-relaxed mb-10 max-w-2xl">
+
+          An advanced AI whiteboard platform where students can draw equations,
+          diagrams, and handwritten questions to get instant step-by-step solutions.
+
+        </p>
+
+        <!-- BUTTONS -->
+
+        <div class="flex flex-wrap gap-5">
+
+          <button class="px-10 py-5 rounded-full bg-gradient-to-r from-cyan-500 to-purple-600 font-bold text-lg hover:scale-105 transition duration-300 glow">
+
+            Get Started
+            <i class="ri-arrow-right-line ml-2"></i>
+
+          </button>
+
+          <button class="glass px-10 py-5 rounded-full text-lg hover:scale-105 transition duration-300">
+
+            Watch Demo
+            <i class="ri-play-circle-line ml-2"></i>
+
+          </button>
+
+        </div>
+
+      </div>
+
+      <!-- RIGHT SIDE -->
+
+      <div class="relative flex justify-center items-center">
+
+        <!-- MAIN CARD -->
+
+        <div class="glass rounded-[40px] p-8 w-full max-w-[500px] relative overflow-hidden float glow">
+
+          <!-- TOP BUTTONS -->
+
+          <div class="flex gap-3 mb-8">
+
+            <div class="w-5 h-5 rounded-full bg-red-500"></div>
+            <div class="w-5 h-5 rounded-full bg-yellow-400"></div>
+            <div class="w-5 h-5 rounded-full bg-green-500"></div>
+
+          </div>
+
+          <!-- WHITEBOARD CARD -->
+
+          <div class="glass rounded-[35px] p-12 flex flex-col items-center justify-center text-center mb-8 min-h-[300px]">
+
+            <div class="text-8xl mb-6">
+              ✍️
+            </div>
+
+            <h2 class="text-4xl font-bold mb-4">
+              Smart Whiteboard
+            </h2>
+
+            <p class="text-gray-300 text-xl leading-relaxed">
+              Draw any question and let AI explain it step-by-step.
+            </p>
+
+          </div>
+
+          <!-- FEATURES -->
+
+          <div class="space-y-5">
+
+            <div class="glass rounded-3xl px-6 py-5 flex items-center justify-between">
+              <span class="text-xl">Math Solver</span>
+              <i class="ri-check-line text-cyan-400 text-2xl"></i>
+            </div>
+
+            <div class="glass rounded-3xl px-6 py-5 flex items-center justify-between">
+              <span class="text-xl">Diagram Analysis</span>
+              <i class="ri-check-line text-cyan-400 text-2xl"></i>
+            </div>
+
+            <div class="glass rounded-3xl px-6 py-5 flex items-center justify-between">
+              <span class="text-xl">AI Explanations</span>
+              <i class="ri-check-line text-cyan-400 text-2xl"></i>
+            </div>
+
+            <div class="glass rounded-3xl px-6 py-5 flex items-center justify-between">
+              <span class="text-xl">Step-by-Step Solutions</span>
+              <i class="ri-check-line text-cyan-400 text-2xl"></i>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- STATS SECTION -->
+
+  <section class="px-6 pb-24">
+
+    <div class="max-w-7xl mx-auto">
+
+      <div class="glass rounded-[40px] p-10 grid grid-cols-2 md:grid-cols-4 gap-10 glow">
+
+        <!-- ITEM -->
+
+        <div class="text-center">
+
+          <div class="w-20 h-20 mx-auto rounded-3xl bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center text-4xl mb-5">
+            <i class="ri-graduation-cap-fill"></i>
+          </div>
+
+          <h2 class="text-5xl font-black mb-2">
+            10K+
+          </h2>
+
+          <p class="text-gray-400 text-lg">
+            Students
+          </p>
+
+        </div>
+
+        <!-- ITEM -->
+
+        <div class="text-center">
+
+          <div class="w-20 h-20 mx-auto rounded-3xl bg-gradient-to-r from-cyan-500 to-blue-500 flex items-center justify-center text-4xl mb-5">
+            <i class="ri-brain-fill"></i>
+          </div>
+
+          <h2 class="text-5xl font-black mb-2">
+            95%
+          </h2>
+
+          <p class="text-gray-400 text-lg">
+            Accuracy
+          </p>
+
+        </div>
+
+        <!-- ITEM -->
+
+        <div class="text-center">
+
+          <div class="w-20 h-20 mx-auto rounded-3xl bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center text-4xl mb-5">
+            <i class="ri-flashlight-fill"></i>
+          </div>
+
+          <h2 class="text-5xl font-black mb-2">
+            Instant
+          </h2>
+
+          <p class="text-gray-400 text-lg">
+            AI Solutions
+          </p>
+
+        </div>
+
+        <!-- ITEM -->
+
+        <div class="text-center">
+
+          <div class="w-20 h-20 mx-auto rounded-3xl bg-gradient-to-r from-pink-500 to-purple-500 flex items-center justify-center text-4xl mb-5">
+            <i class="ri-star-fill"></i>
+          </div>
+
+          <h2 class="text-5xl font-black mb-2">
+            24/7
+          </h2>
+
+          <p class="text-gray-400 text-lg">
+            Available
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- FEATURES SECTION -->
+
+  <section class="py-24 px-6">
+
+    <div class="max-w-7xl mx-auto">
+
+      <div class="text-center mb-20">
+
+        <h2 class="text-6xl font-black mb-6">
+
+          Powerful
+          <span class="gradient-text">
+            Features
+          </span>
+
+        </h2>
+
+        <p class="text-gray-400 text-xl">
+          Advanced AI tools built for modern education.
+        </p>
+
+      </div>
+
+      <!-- CARDS -->
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+
+        <!-- CARD -->
+
+        <div class="glass rounded-[35px] p-10 card-hover">
+
+          <div class="w-20 h-20 rounded-3xl bg-gradient-to-r from-cyan-500 to-blue-500 flex items-center justify-center text-4xl mb-8">
+            <i class="ri-ai-generate"></i>
+          </div>
+
+          <h3 class="text-3xl font-bold mb-5">
+            AI Understanding
+          </h3>
+
+          <p class="text-gray-300 text-lg leading-relaxed">
+            Gemini AI understands handwritten equations, diagrams, and notes instantly.
+          </p>
+
+        </div>
+
+        <!-- CARD -->
+
+        <div class="glass rounded-[35px] p-10 card-hover">
+
+          <div class="w-20 h-20 rounded-3xl bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center text-4xl mb-8">
+            <i class="ri-lightbulb-flash-fill"></i>
+          </div>
+
+          <h3 class="text-3xl font-bold mb-5">
+            Instant Solutions
+          </h3>
+
+          <p class="text-gray-300 text-lg leading-relaxed">
+            Receive detailed step-by-step explanations within seconds.
+          </p>
+
+        </div>
+
+        <!-- CARD -->
+
+        <div class="glass rounded-[35px] p-10 card-hover">
+
+          <div class="w-20 h-20 rounded-3xl bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center text-4xl mb-8">
+            <i class="ri-book-open-fill"></i>
+          </div>
+
+          <h3 class="text-3xl font-bold mb-5">
+            Smart Learning
+          </h3>
+
+          <p class="text-gray-300 text-lg leading-relaxed">
+            Personalized AI tutoring designed for every student’s learning style.
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- FOOTER -->
+
+  <footer class="border-t border-white/10 py-16 px-6 mt-20">
+
+    <div class="max-w-7xl mx-auto grid md:grid-cols-4 gap-10">
+
+      <!-- LOGO -->
+
+      <div>
+
+        <div class="flex items-center gap-3 mb-6">
+
+          <div class="w-12 h-12 rounded-2xl bg-gradient-to-r from-cyan-500 to-purple-600 flex items-center justify-center text-2xl">
+            <i class="ri-quill-pen-ai-fill"></i>
+          </div>
+
+          <h1 class="text-3xl font-black gradient-text">
+            AIEDU
+          </h1>
+
+        </div>
+
+        <p class="text-gray-400 leading-relaxed">
+
+          The future of AI-powered education and interactive learning experiences.
+
+        </p>
+
+      </div>
+
+      <!-- LINKS -->
+
+      <div>
+
+        <h3 class="text-2xl font-bold mb-6">
+          Product
+        </h3>
+
+        <ul class="space-y-4 text-gray-400">
+
+          <li class="hover:text-cyan-400 transition cursor-pointer">Features</li>
+          <li class="hover:text-cyan-400 transition cursor-pointer">Pricing</li>
+          <li class="hover:text-cyan-400 transition cursor-pointer">Security</li>
+          <li class="hover:text-cyan-400 transition cursor-pointer">Roadmap</li>
+
+        </ul>
+
+      </div>
+
+      <!-- LINKS -->
+
+      <div>
+
+        <h3 class="text-2xl font-bold mb-6">
+          Company
+        </h3>
+
+        <ul class="space-y-4 text-gray-400">
+
+          <li class="hover:text-cyan-400 transition cursor-pointer">About</li>
+          <li class="hover:text-cyan-400 transition cursor-pointer">Careers</li>
+          <li class="hover:text-cyan-400 transition cursor-pointer">Blog</li>
+          <li class="hover:text-cyan-400 transition cursor-pointer">Contact</li>
+
+        </ul>
+
+      </div>
+
+      <!-- SOCIALS -->
+
+      <div>
+
+        <h3 class="text-2xl font-bold mb-6">
+          Connect
+        </h3>
+
+        <div class="flex gap-5 text-3xl">
+
+          <i class="ri-instagram-line hover:text-pink-500 cursor-pointer transition"></i>
+
+          <i class="ri-twitter-x-line hover:text-cyan-400 cursor-pointer transition"></i>
+
+          <i class="ri-linkedin-box-fill hover:text-blue-500 cursor-pointer transition"></i>
+
+          <i class="ri-github-fill hover:text-white cursor-pointer transition"></i>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- COPYRIGHT -->
+
+    <div class="border-t border-white/10 mt-16 pt-8 text-center text-gray-500">
+
+      © 2026 AIEDU. All Rights Reserved.
+
+    </div>
+
+  </footer>
+
+  <!-- THREE JS -->
+
+  <script>
+
+    const scene = new THREE.Scene();
+
+    const camera = new THREE.PerspectiveCamera(
+      75,
+      window.innerWidth/window.innerHeight,
+      0.1,
+      1000
+    );
+
+    const renderer = new THREE.WebGLRenderer({
+      alpha:true
+    });
+
+    renderer.setSize(window.innerWidth,window.innerHeight);
+
+    document.body.appendChild(renderer.domElement);
+
+    // OBJECT
+
+    const geometry = new THREE.TorusKnotGeometry(10,3,200,32);
+
+    const material = new THREE.MeshBasicMaterial({
+      color:0x8b5cf6,
+      wireframe:true
+    });
+
+    const torus = new THREE.Mesh(geometry,material);
+
+    scene.add(torus);
+
+    camera.position.z = 30;
+
+    // ANIMATION
+
+    function animate(){
+
+      requestAnimationFrame(animate);
+
+      torus.rotation.x += 0.002;
+      torus.rotation.y += 0.004;
+
+      renderer.render(scene,camera);
+
+    }
+
+    animate();
+
+    // RESPONSIVE
+
+    window.addEventListener("resize",()=>{
+
+      camera.aspect = window.innerWidth/window.innerHeight;
+
+      camera.updateProjectionMatrix();
+
+      renderer.setSize(window.innerWidth,window.innerHeight);
+
+    });
+
+    // GSAP ANIMATIONS
+
+    gsap.from("nav",{
+      y:-100,
+      opacity:0,
+      duration:1.2
+    });
+
+    gsap.from("h1",{
+      y:100,
+      opacity:0,
+      duration:1
+    });
+
+    gsap.from("p",{
+      opacity:0,
+      duration:1.5,
+      stagger:0.2
+    });
+
+    gsap.from("button",{
+      scale:0,
+      opacity:0,
+      stagger:0.2,
+      duration:1,
+      delay:0.4
+    });
+
+  </script>
+
+</body>
+</html>
