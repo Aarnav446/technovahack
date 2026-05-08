@@ -1,12 +1,14 @@
-<!-- chatbot.html -->
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
 
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
 
   <title>AIEDU - AI Whiteboard</title>
 
@@ -27,106 +29,189 @@
 
   <style>
 
-    *{
-      margin:0;
-      padding:0;
-      box-sizing:border-box;
-      font-family:Arial, Helvetica, sans-serif;
-    }
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial, Helvetica, sans-serif;
+}
 
-    body{
-      background:#0a0a0a;
-      color:white;
-      overflow-x:hidden;
-      min-height:100vh;
-    }
+body{
+  background:#0a0a0a;
+  color:white;
+  overflow-x:hidden;
+  min-height:100vh;
+  position:relative;
+}
 
-    .grid-bg{
+/* RANGE */
 
-      background-image:
-      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+input[type="range"]{
+  width:120px;
+}
 
-      background-size:50px 50px;
-    }
+/* GRID */
 
-    .glass{
+.grid-bg{
+  background-image:
+  linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+  linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
 
-      background:rgba(255,255,255,0.03);
+  background-size:50px 50px;
+}
 
-      backdrop-filter:blur(18px);
 
-      border:1px solid rgba(255,255,255,0.06);
 
-      box-shadow:0 4px 20px rgba(255,255,255,0.03);
-    }
+/* GLASS */
 
-    .gradient-text{
+.glass{
 
-      background:linear-gradient(to right,#ffffff,#9ca3af);
+  background:rgba(255,255,255,0.08);
 
-      -webkit-background-clip:text;
-      -webkit-text-fill-color:transparent;
-    }
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
 
-    .blur-ball{
+  border:1px solid rgba(255,255,255,0.12);
 
-      position:absolute;
+  box-shadow:
+  0 8px 32px rgba(0,0,0,0.35);
 
-      width:220px;
-      height:220px;
+  position:relative;
+  z-index:10;
+}
 
-      border-radius:50%;
+/* TEXT */
 
-      filter:blur(120px);
+.gradient-text{
+  background:linear-gradient(to right,#ffffff,#9ca3af);
 
-      opacity:0.08;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
 
-      z-index:-1;
-    }
+/* BLUR BALLS */
 
-    #board{
-      cursor:crosshair;
-      display:block;
-    }
+.blur-ball{
 
-    ::-webkit-scrollbar{
-      width:8px;
-    }
+  position:fixed;
 
-    ::-webkit-scrollbar-thumb{
-      background:#27272a;
-      border-radius:20px;
-    }
+  width:180px;
+  height:180px;
 
-  </style>
+  border-radius:50%;
+
+  filter:blur(120px);
+
+  opacity:0.12;
+
+  z-index:0;
+}
+
+/* CANVAS */
+
+#board{
+  cursor:crosshair;
+  display:block;
+  touch-action:none;
+  background:#111111;
+  width:100%;
+  height:100%;
+}
+
+/* SCROLLBAR */
+
+::-webkit-scrollbar{
+  width:8px;
+}
+
+::-webkit-scrollbar-thumb{
+  background:#27272a;
+  border-radius:20px;
+}
+
+/* CHAT */
+
+.message-user{
+  background:white;
+  color:black;
+  padding:14px;
+  border-radius:18px;
+  margin-left:auto;
+  max-width:85%;
+}
+
+.message-ai{
+  background:rgba(255,255,255,0.05);
+
+  border:1px solid rgba(255,255,255,0.08);
+
+  padding:14px;
+
+  border-radius:18px;
+
+  max-width:85%;
+
+  line-height:1.6;
+
+  color:#d4d4d8;
+}
+
+/* FIX MAIN CONTENT */
+
+main,
+nav,
+section,
+canvas,
+#aiMessages{
+  position:relative;
+  z-index:10;
+}
+
+/* ACTIVE TOOL */
+
+.active{
+  background:rgba(255,255,255,0.1);
+  border:1px solid rgba(255,255,255,0.2);
+}
+
+</style>
 
 </head>
 
 <body class="grid-bg">
 
-  <!-- BLURS -->
+  <!-- BLUR BALLS -->
 
   <div class="blur-ball bg-white top-0 left-0"></div>
+
   <div class="blur-ball bg-zinc-700 bottom-0 right-0"></div>
 
   <!-- NAVBAR -->
 
-  <nav class="fixed top-5 left-1/2 -translate-x-1/2 z-50 w-[92%] max-w-7xl">
+  <nav class="fixed top-5 left-1/2 -translate-x-1/2 z-50 w-[94%] max-w-7xl">
 
     <div class="glass rounded-full px-7 py-4 flex items-center justify-between">
 
-      <div class="flex items-center gap-3">
+      <!-- LOGO -->
+
+      <a
+        href="dashboard.html"
+        class="flex items-center gap-3"
+      >
 
         <div class="w-11 h-11 rounded-2xl bg-white text-black flex items-center justify-center text-lg font-bold">
+
           A
+
         </div>
 
         <h1 class="text-2xl font-semibold tracking-wide">
           AIEDU
         </h1>
 
-      </div>
+      </a>
+
+      <!-- RIGHT -->
 
       <div class="flex items-center gap-4">
 
@@ -139,9 +224,11 @@
 
         <button
           id="logoutBtn"
-          class="px-6 py-3 rounded-full bg-white text-black font-medium hover:scale-105 transition"
+          class="px-6 py-3 rounded-full bg-white text-black font-semibold hover:scale-105 transition"
         >
+
           Logout
+
         </button>
 
       </div>
@@ -152,7 +239,7 @@
 
   <!-- MAIN -->
 
-  <section class="pt-36 px-6 pb-10">
+  <main class="pt-28 px-6 pb-12">
 
     <div class="max-w-7xl mx-auto">
 
@@ -161,28 +248,34 @@
       <div class="mb-10">
 
         <p class="uppercase tracking-[4px] text-sm text-gray-500 mb-4">
+
           AI Whiteboard
+
         </p>
 
-        <h1 class="text-5xl font-black leading-tight mb-4">
+        <h1 class="text-4xl md:text-5xl font-black leading-tight mb-5">
 
-          Draw Your
+          Draw &
           <span class="gradient-text">
-            Problem
+
+            Solve
+
           </span>
+
+          Problems
 
         </h1>
 
-        <p class="text-gray-400 max-w-2xl">
+        <p class="text-gray-400 max-w-2xl leading-relaxed">
 
-          Draw any equation, diagram, graph, or handwritten question.
-          Gemini AI will analyze and solve it instantly.
+          Draw equations, diagrams, graphs, or handwritten questions.
+          AI instantly analyzes and explains everything.
 
         </p>
 
       </div>
 
-      <!-- LAYOUT -->
+      <!-- GRID -->
 
       <div class="grid lg:grid-cols-3 gap-8">
 
@@ -194,50 +287,83 @@
 
             <!-- TOOLS -->
 
-            <div class="flex flex-wrap gap-4 items-center mb-5">
+            <div class="flex flex-wrap items-center gap-4 mb-5">
 
               <input
                 type="color"
                 id="colorPicker"
                 value="#ffffff"
-                class="w-12 h-12 rounded-xl border border-white/10 bg-transparent cursor-pointer"
+                class="w-12 h-12 rounded-xl bg-transparent cursor-pointer border border-white/10"
               />
 
               <input
                 type="range"
                 id="brushSize"
                 min="1"
-                max="20"
+                max="25"
                 value="4"
                 class="cursor-pointer"
               />
 
               <button
-                id="clearBoard"
-                class="px-5 py-3 rounded-xl bg-red-500/20 border border-red-500/20"
+                id="drawTool"
+                class="px-5 py-3 rounded-xl glass hover:bg-white/5 transition active"
               >
+
+                Draw
+
+              </button>
+
+              <button
+                id="eraserTool"
+                class="px-5 py-3 rounded-xl glass hover:bg-white/5 transition"
+              >
+
+                Eraser
+
+              </button>
+
+              <button
+                id="textTool"
+                class="px-5 py-3 rounded-xl glass hover:bg-white/5 transition"
+              >
+
+                Text
+
+              </button>
+
+              <button
+                id="clearBoard"
+                class="px-5 py-3 rounded-xl bg-red-500/20 border border-red-500/20 hover:bg-red-500/30 transition"
+              >
+
                 Clear
+
               </button>
 
               <button
                 id="resetBoard"
-                class="px-5 py-3 rounded-xl glass"
+                class="px-5 py-3 rounded-xl glass hover:bg-white/5 transition"
               >
+
                 Reset
+
               </button>
 
               <button
                 id="sendBtn"
-                class="ml-auto px-7 py-3 rounded-xl bg-white text-black font-semibold hover:scale-105 transition"
+                class="ml-auto px-8 py-3 rounded-xl bg-white text-black font-semibold hover:scale-105 transition"
               >
+
                 Ask AI
+
               </button>
 
             </div>
 
             <!-- CANVAS -->
 
-            <div class="h-[700px] rounded-3xl overflow-hidden border border-white/10">
+            <div class="h-[580px] rounded-3xl overflow-hidden border border-white/10">
 
               <canvas
                 id="board"
@@ -256,7 +382,9 @@
 
           <div class="glass rounded-[32px] p-6 h-[760px] flex flex-col">
 
-            <div class="flex items-center gap-3 mb-6">
+            <!-- TOP -->
+
+            <div class="flex items-center gap-4 mb-6">
 
               <div class="w-14 h-14 rounded-2xl bg-white text-black flex items-center justify-center text-2xl">
 
@@ -267,30 +395,55 @@
               <div>
 
                 <h2 class="text-2xl font-bold">
+
                   Gemini AI
+
                 </h2>
 
                 <p class="text-gray-500 text-sm">
+
                   Smart problem solving
+
                 </p>
 
               </div>
 
             </div>
 
-            <!-- MESSAGES -->
+            <!-- CHAT AREA -->
 
             <div
               id="aiMessages"
               class="flex-1 overflow-y-auto space-y-4 pr-2"
             >
 
-              <div class="bg-white/5 border border-white/10 rounded-2xl p-4">
+              <div class="message-ai">
 
-                👋 Hello! Draw your question and click
-                <b>Ask AI</b>
+                👋 Hello! Draw your problem or type your question below.
 
               </div>
+
+            </div>
+
+            <!-- INPUT -->
+
+            <div class="mt-5 flex gap-3">
+
+              <input
+                type="text"
+                id="userPrompt"
+                placeholder="Ask AI anything..."
+                class="flex-1 bg-white/5 border border-white/10 rounded-2xl px-5 py-4 outline-none"
+              />
+
+              <button
+                id="sendTextBtn"
+                class="px-6 rounded-2xl bg-white text-black font-semibold hover:scale-105 transition"
+              >
+
+                Send
+
+              </button>
 
             </div>
 
@@ -302,15 +455,46 @@
 
     </div>
 
-  </section>
+  </main>
 
-  <!-- SCRIPTS -->
+  <!-- SUPABASE -->
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+  <!-- CONFIG -->
+
   <script src="./js/config.js"></script>
 
+  <!-- CHATBOT LOGIC -->
+
   <script src="./js/chatbot.js"></script>
+
+  <!-- GSAP -->
+
+  <script>
+
+gsap.from("nav",{
+  y:-80,
+  opacity:0,
+  duration:1
+});
+
+gsap.from("h1,p",{
+  y:40,
+  opacity:0,
+  duration:1,
+  stagger:0.08
+});
+
+gsap.from(".glass",{
+  y:30,
+  opacity:0,
+  stagger:0.08,
+  duration:0.8,
+  clearProps:"all"
+});
+
+</script>
 
 </body>
 
