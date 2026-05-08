@@ -12,6 +12,17 @@
 
   <script src="https://cdn.tailwindcss.com"></script>
 
+      <!-- SUPABASE -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<!-- CONFIG -->
+
+<script src="js/config.js"></script>
+
+<!-- AUTH -->
+
+<script src="js/auth.js"></script>
   <!-- Remix Icons -->
 
   <link
@@ -39,6 +50,7 @@
       overflow-x:hidden;
       min-height:100vh;
       position:relative;
+      transition:0.3s ease;
     }
 
     /* GRID */
@@ -143,6 +155,34 @@
 
     }
 
+    /* NAV LINKS */
+
+    nav a{
+      position:relative;
+    }
+
+    nav a::after{
+
+      content:'';
+
+      position:absolute;
+
+      left:0;
+      bottom:-6px;
+
+      width:0%;
+      height:1px;
+
+      background:white;
+
+      transition:0.3s;
+
+    }
+
+    nav a:hover::after{
+      width:100%;
+    }
+
     /* SCROLLBAR */
 
     ::-webkit-scrollbar{
@@ -169,11 +209,11 @@
 
   <nav class="fixed top-5 left-1/2 -translate-x-1/2 z-50 w-[92%] max-w-7xl">
 
-    <div class="glass rounded-full px-7 py-4 flex items-center justify-between">
+    <div class="glass rounded-full px-7 py-4 flex items-center justify-between border border-white/10">
 
       <!-- LOGO -->
 
-      <div class="flex items-center gap-3">
+      <a href="index.html" class="flex items-center gap-3">
 
         <div class="w-11 h-11 rounded-2xl bg-white text-black flex items-center justify-center text-lg font-bold">
 
@@ -185,37 +225,48 @@
           AIEDU
         </h1>
 
-      </div>
+      </a>
 
       <!-- MENU -->
 
       <ul class="hidden md:flex items-center gap-8 text-gray-400 font-medium text-sm">
 
-        <li class="hover:text-white transition cursor-pointer">
-          Home
+        <li>
+          <a href="index.html" class="hover:text-white transition">
+            Home
+          </a>
         </li>
 
-        <li class="hover:text-white transition cursor-pointer">
-          Features
+        <li>
+          <a href="index.html#features" class="hover:text-white transition">
+            Features
+          </a>
         </li>
 
-        <li class="hover:text-white transition cursor-pointer">
-          About
+        <li>
+          <a href="index.html#about" class="hover:text-white transition">
+            About
+          </a>
         </li>
 
-        <li class="hover:text-white transition cursor-pointer">
-          Contact
+        <li>
+          <a href="index.html#contact" class="hover:text-white transition">
+            Contact
+          </a>
         </li>
 
       </ul>
 
       <!-- BUTTON -->
 
-      <button class="px-6 py-3 rounded-full bg-white text-black font-medium hover:scale-105 transition duration-300">
+      <a
+        href="signup.html"
+        class="px-6 py-3 rounded-full bg-white text-black font-medium hover:scale-105 transition duration-300"
+      >
 
         Sign Up
 
-      </button>
+      </a>
 
     </div>
 
@@ -262,9 +313,10 @@
 
         <div class="space-y-4">
 
-          <!-- CARD -->
-
-          <div class="glass rounded-[24px] p-5 flex items-center gap-5 border border-white/5 hover-card">
+          <div
+            onclick="window.location.href='whiteboard.html'"
+            class="glass rounded-[24px] p-5 flex items-center gap-5 border border-white/5 hover-card cursor-pointer"
+          >
 
             <div class="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center text-2xl border border-white/5">
 
@@ -288,9 +340,10 @@
 
           </div>
 
-          <!-- CARD -->
-
-          <div class="glass rounded-[24px] p-5 flex items-center gap-5 border border-white/5 hover-card">
+          <div
+            onclick="window.location.href='dashboard.html'"
+            class="glass rounded-[24px] p-5 flex items-center gap-5 border border-white/5 hover-card cursor-pointer"
+          >
 
             <div class="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center text-2xl border border-white/5">
 
@@ -314,9 +367,10 @@
 
           </div>
 
-          <!-- CARD -->
-
-          <div class="glass rounded-[24px] p-5 flex items-center gap-5 border border-white/5 hover-card">
+          <div
+            onclick="window.location.href='analytics.html'"
+            class="glass rounded-[24px] p-5 flex items-center gap-5 border border-white/5 hover-card cursor-pointer"
+          >
 
             <div class="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center text-2xl border border-white/5">
 
@@ -376,7 +430,7 @@
 
           <!-- FORM -->
 
-          <form class="space-y-5">
+          <form id="loginForm" class="space-y-5">
 
             <!-- EMAIL -->
 
@@ -396,6 +450,7 @@
                   type="email"
                   placeholder="Enter your email"
                   class="input-box"
+                  required
                 />
 
               </div>
@@ -420,6 +475,7 @@
                   type="password"
                   placeholder="Enter your password"
                   class="input-box"
+                  required
                 />
 
               </div>
@@ -438,7 +494,10 @@
 
               </label>
 
-              <a href="#" class="text-gray-500 hover:text-white transition">
+              <a
+                href="forgot-password.html"
+                class="text-gray-500 hover:text-white transition"
+              >
 
                 Forgot Password?
 
@@ -476,6 +535,7 @@
 
             <button
               type="button"
+              onclick="window.location.href='dashboard.html'"
               class="glass border border-white/5 w-full py-4 rounded-full hover:bg-white/5 transition duration-300 flex items-center justify-center gap-3"
             >
 
@@ -491,7 +551,10 @@
 
               Don’t have an account?
 
-              <a href="#" class="text-white hover:text-gray-300 transition">
+              <a
+                href="signup.html"
+                class="text-white hover:text-gray-300 transition"
+              >
 
                 Sign Up
 
@@ -575,6 +638,35 @@
       stagger:0.08,
       duration:1
     });
+
+    /* LOGIN */
+
+
+  const loginForm =
+  document.getElementById("loginForm");
+
+  loginForm.addEventListener(
+    "submit",
+    async function(e){
+
+      e.preventDefault();
+
+      const inputs =
+      document.querySelectorAll(".input-box");
+
+      const email = inputs[0].value;
+
+      const password = inputs[1].value;
+
+      await loginUser(
+        email,
+        password
+      );
+
+    }
+  );
+
+
 
   </script>
 

@@ -4,7 +4,7 @@
 <head>
 
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
   <title>AIEDU - AI Learning Platform</title>
 
@@ -23,7 +23,134 @@
     rel="stylesheet"
   />
 
-  <link rel="stylesheet" href="css/style.css" />
+  <style>
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      scroll-behavior:smooth;
+      font-family:Arial, Helvetica, sans-serif;
+    }
+
+    body{
+      background:#0a0a0a;
+      color:white;
+      overflow-x:hidden;
+      position:relative;
+      transition:0.3s ease;
+    }
+
+    /* GRID */
+
+    .grid-bg{
+
+      background-image:
+      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+
+      background-size:50px 50px;
+
+    }
+
+    /* GLASS */
+
+    .glass{
+
+      background:rgba(255,255,255,0.03);
+
+      backdrop-filter:blur(18px);
+      -webkit-backdrop-filter:blur(18px);
+
+      box-shadow:
+      0 4px 20px rgba(255,255,255,0.03);
+
+    }
+
+    /* TEXT */
+
+    .gradient-text{
+
+      background:linear-gradient(to right,#ffffff,#9ca3af);
+
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+
+    }
+
+    /* BLUR BALL */
+
+    .blur-ball{
+
+      position:absolute;
+
+      width:220px;
+      height:220px;
+
+      border-radius:50%;
+
+      filter:blur(120px);
+
+      opacity:0.08;
+
+      z-index:-1;
+
+    }
+
+    /* CARD */
+
+    .card-hover{
+      transition:0.3s;
+    }
+
+    .card-hover:hover{
+
+      transform:translateY(-5px);
+
+      border-color:rgba(255,255,255,0.12);
+
+    }
+
+    /* NAV LINK */
+
+    nav a{
+      position:relative;
+    }
+
+    nav a::after{
+
+      content:'';
+
+      position:absolute;
+
+      left:0;
+      bottom:-6px;
+
+      width:0%;
+      height:1px;
+
+      background:white;
+
+      transition:0.3s;
+
+    }
+
+    nav a:hover::after{
+      width:100%;
+    }
+
+    /* SCROLLBAR */
+
+    ::-webkit-scrollbar{
+      width:8px;
+    }
+
+    ::-webkit-scrollbar-thumb{
+      background:#27272a;
+      border-radius:20px;
+    }
+
+  </style>
 
 </head>
 
@@ -38,11 +165,11 @@
 
   <nav class="fixed top-5 left-1/2 -translate-x-1/2 z-50 w-[92%] max-w-7xl">
 
-    <div class="glass rounded-full px-7 py-4 flex items-center justify-between">
+    <div class="glass rounded-full px-7 py-4 flex items-center justify-between border border-white/10">
 
       <!-- LOGO -->
 
-      <div class="flex items-center gap-3">
+      <a href="#home" class="flex items-center gap-3">
 
         <div class="w-11 h-11 rounded-2xl bg-white text-black flex items-center justify-center text-lg font-bold">
 
@@ -54,41 +181,55 @@
           AIEDU
         </h1>
 
-      </div>
+      </a>
 
       <!-- MENU -->
 
       <ul class="hidden md:flex items-center gap-8 text-gray-400 font-medium text-sm">
 
-        <li class="hover:text-white transition cursor-pointer">
-          Home
+        <li>
+          <a href="#home" class="hover:text-white transition">
+            Home
+          </a>
         </li>
 
-        <li class="hover:text-white transition cursor-pointer">
-          Features
+        <li>
+          <a href="#features" class="hover:text-white transition">
+            Features
+          </a>
         </li>
 
-        <li class="hover:text-white transition cursor-pointer">
-          How It Works
+        <li>
+          <a href="#stats" class="hover:text-white transition">
+            Stats
+          </a>
         </li>
 
-        <li class="hover:text-white transition cursor-pointer">
-          About
+        <li>
+          <a href="#about" class="hover:text-white transition">
+            About
+          </a>
         </li>
 
-        <li class="hover:text-white transition cursor-pointer">
-          Contact
+        <li>
+          <a href="#contact" class="hover:text-white transition">
+            Contact
+          </a>
         </li>
 
       </ul>
 
       <!-- BUTTON -->
 
-      <button class="px-6 py-3 rounded-full bg-white text-black font-medium hover:scale-105 transition duration-300">
+      <a
+        href="login.html"
+        class="px-6 py-3 rounded-full bg-white text-black font-medium hover:scale-105 transition duration-300"
+      >
 
-        Get Started
+        Login Now
+        
 
-      </button>
+      </a>
 
     </div>
 
@@ -96,7 +237,7 @@
 
   <!-- HERO SECTION -->
 
-  <section class="min-h-screen flex items-center justify-center px-6 pt-36 pb-16 relative overflow-hidden">
+  <section id="home" class="min-h-screen flex items-center justify-center px-6 pt-36 pb-16 relative overflow-hidden">
 
     <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-10 items-center">
 
@@ -108,7 +249,7 @@
           AI Powered Learning
         </p>
 
-        <h1 class="text-4xl md:text-5xl font-black leading-[1.05] mb-5">
+        <h1 class="text-4xl md:text-6xl font-black leading-[1.05] mb-5">
 
           Draw Your
           <br>
@@ -134,19 +275,25 @@
 
         <div class="flex flex-wrap gap-4">
 
-          <button class="px-8 py-4 rounded-full bg-white text-black font-semibold hover:scale-105 transition duration-300">
+          <a
+            href="signup.html"
+            class="px-8 py-4 rounded-full bg-white text-black font-semibold hover:scale-105 transition duration-300 inline-flex items-center"
+          >
 
             Get Started
             <i class="ri-arrow-right-line ml-2"></i>
 
-          </button>
+          </a>
 
-          <button class="glass border border-white/10 px-8 py-4 rounded-full text-sm hover:bg-white/5 transition duration-300">
+          <a
+            href="#features"
+            class="glass border border-white/10 px-8 py-4 rounded-full text-sm hover:bg-white/5 transition duration-300 inline-flex items-center"
+          >
 
             Watch Demo
             <i class="ri-play-circle-line ml-2"></i>
 
-          </button>
+          </a>
 
         </div>
 
@@ -172,10 +319,12 @@
 
           <!-- WHITEBOARD -->
 
-          <div class="glass rounded-[22px] p-6 flex flex-col items-center justify-center text-center mb-4 min-h-[150px] border border-white/5">
+          <div
+            class="glass rounded-[22px] p-6 flex flex-col items-center justify-center text-center mb-4 min-h-[150px] border border-white/5 cursor-pointer hover:bg-white/5 transition"
+          >
 
-            <div class="text-5xl mb-4">
-              ✍️
+            <div class="text-5xl mb-4 text-white">
+              <i class="ri-pencil-line"></i>
             </div>
 
             <h2 class="text-3xl font-bold mb-3">
@@ -236,7 +385,7 @@
 
   <!-- STATS -->
 
-  <section class="px-6 pb-20">
+  <section id="stats" class="px-6 pb-20">
 
     <div class="max-w-7xl mx-auto">
 
@@ -330,7 +479,7 @@
 
   <!-- FEATURES -->
 
-  <section class="py-20 px-6">
+  <section id="features" class="py-20 px-6">
 
     <div class="max-w-7xl mx-auto">
 
@@ -359,7 +508,10 @@
 
         <!-- CARD -->
 
-        <div class="glass rounded-[28px] p-8 card-hover border border-white/5">
+        <div
+          onclick="window.location.href='dashboard.html'"
+          class="glass rounded-[28px] p-8 card-hover border border-white/5 cursor-pointer"
+        >
 
           <div class="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center text-3xl mb-6 border border-white/5">
 
@@ -373,7 +525,7 @@
 
           <p class="text-gray-400 leading-relaxed">
 
-            Gemini AI understands handwritten equations, diagrams, and notes instantly.
+             AI understands handwritten equations, diagrams, and notes instantly.
 
           </p>
 
@@ -381,7 +533,10 @@
 
         <!-- CARD -->
 
-        <div class="glass rounded-[28px] p-8 card-hover border border-white/5">
+        <div
+          onclick="window.location.href='whiteboard.html'"
+          class="glass rounded-[28px] p-8 card-hover border border-white/5 cursor-pointer"
+        >
 
           <div class="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center text-3xl mb-6 border border-white/5">
 
@@ -403,7 +558,10 @@
 
         <!-- CARD -->
 
-        <div class="glass rounded-[28px] p-8 card-hover border border-white/5">
+        <div
+          onclick="window.location.href='analytics.html'"
+          class="glass rounded-[28px] p-8 card-hover border border-white/5 cursor-pointer"
+        >
 
           <div class="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center text-3xl mb-6 border border-white/5">
 
@@ -429,9 +587,37 @@
 
   </section>
 
+  <!-- ABOUT -->
+
+  <section id="about" class="px-6 py-20">
+
+    <div class="max-w-5xl mx-auto text-center">
+
+      <h2 class="text-5xl font-black mb-6">
+
+        About
+        <span class="gradient-text">
+          AIEDU
+        </span>
+
+      </h2>
+
+      <p class="text-gray-400 text-lg leading-relaxed">
+
+        AIEDU is an AI-powered educational platform that transforms
+        handwritten questions into instant intelligent solutions.
+        Students can draw problems directly on a smart whiteboard
+        and receive detailed AI explanations powered by  AI.
+
+      </p>
+
+    </div>
+
+  </section>
+
   <!-- FOOTER -->
 
-  <footer class="border-t border-white/10 py-14 px-6 mt-16">
+  <footer id="contact" class="border-t border-white/10 py-14 px-6 mt-16">
 
     <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
 
@@ -494,6 +680,35 @@
       y:40,
       stagger:0.1,
       duration:1
+    });
+
+    /* PAGE TRANSITION */
+
+    document.querySelectorAll("a").forEach(link => {
+
+      link.addEventListener("click", function(e){
+
+        const href = this.getAttribute("href");
+
+        if(
+          href &&
+          !href.startsWith("#")
+        ){
+
+          e.preventDefault();
+
+          document.body.style.opacity = "0";
+
+          setTimeout(()=>{
+
+            window.location.href = href;
+
+          },300);
+
+        }
+
+      });
+
     });
 
   </script>

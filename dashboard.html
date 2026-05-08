@@ -1,24 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
   <title>AIEDU Dashboard</title>
 
-  <!-- Tailwind -->
+  <!-- TAILWIND -->
+
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Remix Icons -->
+  <!-- REMIX ICON -->
+
   <link
     href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css"
     rel="stylesheet"
   />
 
   <!-- GSAP -->
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 
-  <!-- Chart.js -->
+  <!-- CHART -->
+
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- SUPABASE -->
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
 
@@ -27,389 +42,233 @@
       padding:0;
       box-sizing:border-box;
       font-family:Arial, Helvetica, sans-serif;
+      scroll-behavior:smooth;
     }
 
     body{
-      background:#020617;
-      overflow-x:hidden;
+      background:#0a0a0a;
       color:white;
+      overflow-x:hidden;
       min-height:100vh;
       position:relative;
     }
 
-    /* GRID */
-
-    body::before{
-      content:'';
-      position:fixed;
-      inset:0;
+    .grid-bg{
 
       background-image:
-      linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
 
       background-size:50px 50px;
-      z-index:-3;
+
     }
-
-    /* BLOBS */
-
-    .blob{
-      position:absolute;
-      border-radius:50%;
-      filter:blur(120px);
-      opacity:0.4;
-      z-index:-2;
-    }
-
-    .blob1{
-      width:350px;
-      height:350px;
-      background:#7c3aed;
-      top:-100px;
-      left:-100px;
-    }
-
-    .blob2{
-      width:300px;
-      height:300px;
-      background:#06b6d4;
-      right:-100px;
-      top:30%;
-    }
-
-    .blob3{
-      width:250px;
-      height:250px;
-      background:#2563eb;
-      bottom:-100px;
-      left:40%;
-    }
-
-    /* GLASS */
 
     .glass{
-      background:rgba(255,255,255,0.05);
-      backdrop-filter:blur(25px);
-      -webkit-backdrop-filter:blur(25px);
 
-      border:1px solid rgba(255,255,255,0.08);
+      background:rgba(255,255,255,0.03);
+
+      backdrop-filter:blur(18px);
+      -webkit-backdrop-filter:blur(18px);
+
+      border:1px solid rgba(255,255,255,0.06);
 
       box-shadow:
-      0 8px 32px rgba(0,0,0,0.35),
-      inset 0 0 20px rgba(255,255,255,0.03);
+      0 4px 20px rgba(255,255,255,0.03);
+
     }
 
-    /* GRADIENT */
+    .blur-ball{
 
-    .gradient-text{
-      background:linear-gradient(to right,#60a5fa,#8b5cf6,#22d3ee);
-      -webkit-background-clip:text;
-      -webkit-text-fill-color:transparent;
+      position:absolute;
+
+      width:240px;
+      height:240px;
+
+      border-radius:50%;
+
+      filter:blur(120px);
+
+      opacity:0.08;
+
+      z-index:-1;
+
     }
 
-    /* GLOW */
-
-    .glow{
-      box-shadow:
-      0 0 25px rgba(124,58,237,0.35),
-      0 0 50px rgba(6,182,212,0.2);
+    .card-hover{
+      transition:0.3s;
+      cursor:pointer;
     }
 
-    /* HOVER */
+    .card-hover:hover{
 
-    .hover-card{
-      transition:0.4s;
+      transform:translateY(-5px);
+
+      border-color:rgba(255,255,255,0.12);
+
     }
-
-    .hover-card:hover{
-      transform:translateY(-8px) scale(1.02);
-      box-shadow:
-      0 0 30px rgba(124,58,237,0.25);
-    }
-
-    /* SCROLLBAR */
 
     ::-webkit-scrollbar{
       width:8px;
     }
 
     ::-webkit-scrollbar-thumb{
-      background:#7c3aed;
+      background:#27272a;
       border-radius:20px;
-    }
-
-    /* SIDEBAR */
-
-    .sidebar-link{
-      transition:0.3s;
-    }
-
-    .sidebar-link:hover{
-      background:rgba(255,255,255,0.06);
-      transform:translateX(5px);
-    }
-
-    /* FLOAT */
-
-    .float{
-      animation:float 5s ease-in-out infinite;
-    }
-
-    @keyframes float{
-
-      0%{
-        transform:translateY(0px);
-      }
-
-      50%{
-        transform:translateY(-10px);
-      }
-
-      100%{
-        transform:translateY(0px);
-      }
-
     }
 
   </style>
 
 </head>
 
-<body>
+<body class="grid-bg">
 
-  <!-- BLOBS -->
+  <!-- BLURS -->
 
-  <div class="blob blob1"></div>
-  <div class="blob blob2"></div>
-  <div class="blob blob3"></div>
+  <div class="blur-ball bg-white top-0 left-0"></div>
+
+  <div class="blur-ball bg-zinc-700 bottom-0 right-0"></div>
+
+  <!-- NAVBAR -->
+
+  <nav class="fixed top-5 left-1/2 -translate-x-1/2 z-50 w-[94%] max-w-7xl">
+
+    <div class="glass rounded-full px-7 py-4 flex items-center justify-between">
+
+      <!-- LOGO -->
+
+      <a
+        href="index.html"
+        class="flex items-center gap-3"
+      >
+
+        <div class="w-11 h-11 rounded-2xl bg-white text-black flex items-center justify-center text-lg font-bold">
+
+          A
+
+        </div>
+
+        <h1 class="text-2xl font-semibold tracking-wide">
+          AIEDU
+        </h1>
+
+      </a>
+
+      <!-- MENU -->
+
+      <div class="hidden md:flex items-center gap-8 text-sm text-gray-400">
+
+        <a
+          href="#overview"
+          class="hover:text-white transition"
+        >
+          Overview
+        </a>
+
+        <a
+          href="#progress"
+          class="hover:text-white transition"
+        >
+          Progress
+        </a>
+
+        <a
+          href="#activity"
+          class="hover:text-white transition"
+        >
+          Activity
+        </a>
+
+      </div>
+
+      <!-- RIGHT -->
+
+      <div class="flex items-center gap-4">
+
+        <button
+          onclick="window.location.href='chatbot.html'"
+          class="hidden md:flex px-5 py-3 rounded-full bg-white text-black font-semibold hover:scale-105 transition"
+        >
+
+          Open AI Tutor
+
+        </button>
+
+        <button
+          onclick="logoutUser()"
+          class="w-12 h-12 rounded-full glass flex items-center justify-center hover:bg-white hover:text-black transition"
+        >
+
+          <i class="ri-logout-box-r-line text-lg"></i>
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </nav>
 
   <!-- MAIN -->
 
-  <div class="flex min-h-screen">
+  <main class="pt-36 px-6 pb-16">
 
-    <!-- SIDEBAR -->
-
-    <aside class="w-[300px] p-6 hidden lg:block">
-
-      <div class="glass rounded-[35px] p-6 h-full glow">
-
-        <!-- LOGO -->
-
-        <div class="flex items-center gap-4 mb-14">
-
-          <div class="w-14 h-14 rounded-2xl bg-gradient-to-r from-cyan-500 to-purple-600 flex items-center justify-center text-2xl">
-
-            <i class="ri-quill-pen-ai-fill"></i>
-
-          </div>
-
-          <div>
-
-            <h1 class="text-3xl font-black gradient-text">
-              AIEDU
-            </h1>
-
-            <p class="text-gray-400 text-sm">
-              AI Learning Platform
-            </p>
-
-          </div>
-
-        </div>
-
-        <!-- MENU -->
-
-        <div class="space-y-4">
-
-          <div class="sidebar-link glass rounded-2xl px-5 py-4 flex items-center gap-4 cursor-pointer bg-gradient-to-r from-cyan-500/10 to-purple-500/10">
-
-            <i class="ri-dashboard-fill text-2xl text-cyan-400"></i>
-
-            <span class="text-lg font-semibold">
-              Dashboard
-            </span>
-
-          </div>
-
-          <div class="sidebar-link rounded-2xl px-5 py-4 flex items-center gap-4 cursor-pointer">
-
-            <i class="ri-pencil-ruler-2-fill text-2xl"></i>
-
-            <span class="text-lg">
-              AI Whiteboard
-            </span>
-
-          </div>
-
-          <div class="sidebar-link rounded-2xl px-5 py-4 flex items-center gap-4 cursor-pointer">
-
-            <i class="ri-history-fill text-2xl"></i>
-
-            <span class="text-lg">
-              History
-            </span>
-
-          </div>
-
-          <div class="sidebar-link rounded-2xl px-5 py-4 flex items-center gap-4 cursor-pointer">
-
-            <i class="ri-book-open-fill text-2xl"></i>
-
-            <span class="text-lg">
-              Courses
-            </span>
-
-          </div>
-
-          <div class="sidebar-link rounded-2xl px-5 py-4 flex items-center gap-4 cursor-pointer">
-
-            <i class="ri-bar-chart-fill text-2xl"></i>
-
-            <span class="text-lg">
-              Analytics
-            </span>
-
-          </div>
-
-          <div class="sidebar-link rounded-2xl px-5 py-4 flex items-center gap-4 cursor-pointer">
-
-            <i class="ri-settings-4-fill text-2xl"></i>
-
-            <span class="text-lg">
-              Settings
-            </span>
-
-          </div>
-
-        </div>
-
-        <!-- USER -->
-
-        <div class="glass rounded-3xl p-5 mt-16 flex items-center gap-4">
-
-          <img
-            src="https://i.pravatar.cc/100"
-            class="w-16 h-16 rounded-2xl object-cover"
-          />
-
-          <div>
-
-            <h3 class="text-xl font-bold">
-              Aarnav
-            </h3>
-
-            <p class="text-gray-400">
-              Premium Student
-            </p>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </aside>
-
-    <!-- CONTENT -->
-
-    <main class="flex-1 p-6">
-
-      <!-- TOPBAR -->
-
-      <div class="glass rounded-[35px] px-8 py-6 flex flex-col lg:flex-row lg:items-center justify-between gap-6 mb-8 glow">
-
-        <!-- LEFT -->
-
-        <div>
-
-          <p class="text-cyan-400 uppercase tracking-[4px] mb-2">
-            Welcome Back
-          </p>
-
-          <h1 class="text-5xl font-black">
-
-            AI Learning
-            <span class="gradient-text">
-              Dashboard
-            </span>
-
-          </h1>
-
-        </div>
-
-        <!-- RIGHT -->
-
-        <div class="flex items-center gap-5">
-
-          <div class="glass rounded-2xl px-5 py-4 flex items-center gap-3">
-
-            <i class="ri-search-line text-xl text-gray-400"></i>
-
-            <input
-              type="text"
-              placeholder="Search..."
-              class="bg-transparent outline-none text-white"
-            />
-
-          </div>
-
-          <div class="glass w-16 h-16 rounded-2xl flex items-center justify-center text-2xl cursor-pointer hover:scale-105 transition">
-
-            <i class="ri-notification-3-fill"></i>
-
-          </div>
-
-        </div>
-
-      </div>
+    <div class="max-w-7xl mx-auto">
 
       <!-- HERO -->
 
-      <div class="grid xl:grid-cols-3 gap-8 mb-8">
+      <section
+        id="overview"
+        class="mb-10"
+      >
 
-        <!-- MAIN HERO -->
+        <div class="glass rounded-[34px] p-8 md:p-10 flex flex-col lg:flex-row items-center justify-between gap-10">
 
-        <div class="glass rounded-[40px] p-10 xl:col-span-2 relative overflow-hidden glow float">
+          <!-- LEFT -->
 
-          <div class="absolute top-0 right-0 w-[250px] h-[250px] bg-purple-500/20 rounded-full blur-[100px]"></div>
+          <div>
 
-          <div class="relative z-10">
+            <p class="text-gray-500 uppercase tracking-[4px] text-sm mb-4">
 
-            <p class="text-cyan-400 uppercase tracking-[4px] mb-4">
-              Smart AI Whiteboard
+              AI Powered Dashboard
+
             </p>
 
-            <h2 class="text-6xl font-black leading-tight mb-6">
+            <h2 class="text-5xl md:text-6xl font-black leading-[1.05] mb-5">
 
-              Draw.
-              Learn.
-              Solve.
+              Welcome Back,
+              <br>
+
+              <span id="userName">
+                Student
+              </span>
 
             </h2>
 
-            <p class="text-gray-300 text-xl leading-relaxed max-w-2xl mb-10">
+            <p class="text-gray-400 max-w-xl leading-relaxed mb-8">
 
-              Solve handwritten problems instantly using Gemini AI.
-              Draw equations, diagrams, and questions to receive
-              step-by-step AI explanations.
+              Continue learning with AI-generated explanations,
+              real-time analytics, and personalized education support.
 
             </p>
 
-            <!-- BUTTONS -->
+            <div class="flex flex-wrap gap-4">
 
-            <div class="flex flex-wrap gap-5">
+              <button
+                onclick="window.location.href='chatbot.html'"
+                class="px-8 py-4 rounded-full bg-white text-black font-semibold hover:scale-105 transition"
+              >
 
-              <button class="px-10 py-5 rounded-2xl bg-gradient-to-r from-cyan-500 to-purple-600 text-xl font-bold hover:scale-105 transition duration-300 glow">
-
-                Open Whiteboard
+                Start Solving
                 <i class="ri-arrow-right-line ml-2"></i>
 
               </button>
 
-              <button class="glass px-10 py-5 rounded-2xl text-xl hover:scale-105 transition duration-300">
+              <button
+                onclick="scrollToSection('progress')"
+                class="glass px-8 py-4 rounded-full hover:bg-white/5 transition"
+              >
 
-                Watch Demo
+                View Progress
 
               </button>
 
@@ -417,374 +276,360 @@
 
           </div>
 
+          <!-- RIGHT -->
+
+          <div class="glass rounded-[28px] p-6 w-full max-w-[380px] border border-white/5">
+
+            <div class="flex items-center justify-between mb-6">
+
+              <h3 class="text-2xl font-bold">
+                AI Stats
+              </h3>
+
+              <i class="ri-bar-chart-box-fill text-2xl text-gray-400"></i>
+
+            </div>
+
+            <!-- REALTIME STATS -->
+
+            <div class="space-y-6">
+
+              <!-- ACCURACY -->
+
+              <div>
+
+                <div class="flex items-center justify-between mb-2">
+
+                  <span class="text-gray-400">
+                    Math Accuracy
+                  </span>
+
+                  <span
+                    id="accuracyText"
+                    class="font-semibold"
+                  >
+                    0%
+                  </span>
+
+                </div>
+
+                <div class="h-2 rounded-full bg-white/10 overflow-hidden">
+
+                  <div
+                    id="accuracyBar"
+                    class="h-full w-0 bg-white rounded-full transition-all duration-1000"
+                  ></div>
+
+                </div>
+
+              </div>
+
+              <!-- UNDERSTANDING -->
+
+              <div>
+
+                <div class="flex items-center justify-between mb-2">
+
+                  <span class="text-gray-400">
+                    AI Understanding
+                  </span>
+
+                  <span
+                    id="understandingText"
+                    class="font-semibold"
+                  >
+                    0%
+                  </span>
+
+                </div>
+
+                <div class="h-2 rounded-full bg-white/10 overflow-hidden">
+
+                  <div
+                    id="understandingBar"
+                    class="h-full w-0 bg-white rounded-full transition-all duration-1000"
+                  ></div>
+
+                </div>
+
+              </div>
+
+              <!-- STREAK -->
+
+              <div>
+
+                <div class="flex items-center justify-between mb-2">
+
+                  <span class="text-gray-400">
+                    Daily Streak
+                  </span>
+
+                  <span
+                    id="streakText"
+                    class="font-semibold"
+                  >
+                    0 Days
+                  </span>
+
+                </div>
+
+                <div class="h-2 rounded-full bg-white/10 overflow-hidden">
+
+                  <div
+                    id="streakBar"
+                    class="h-full w-0 bg-white rounded-full transition-all duration-1000"
+                  ></div>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
         </div>
 
-        <!-- AI CARD -->
+      </section>
 
-        <div class="glass rounded-[40px] p-8 glow hover-card">
+      <!-- FEATURE CARDS -->
 
-          <div class="flex items-center justify-between mb-8">
+      <section class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
 
-            <h3 class="text-3xl font-black">
-              AI Status
-            </h3>
+        <!-- AI TUTOR -->
 
-            <div class="w-4 h-4 rounded-full bg-green-400 animate-pulse"></div>
+        <div
+          onclick="window.location.href='chatbot.html'"
+          class="glass rounded-[28px] p-7 card-hover"
+        >
 
-          </div>
+          <div class="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center text-3xl mb-6 border border-white/5">
 
-          <!-- ITEMS -->
-
-          <div class="space-y-5">
-
-            <div class="glass rounded-3xl p-5">
-
-              <p class="text-gray-400 mb-2">
-                AI Accuracy
-              </p>
-
-              <h2 class="text-5xl font-black gradient-text">
-                98%
-              </h2>
-
-            </div>
-
-            <div class="glass rounded-3xl p-5">
-
-              <p class="text-gray-400 mb-2">
-                Problems Solved
-              </p>
-
-              <h2 class="text-5xl font-black">
-                1,248
-              </h2>
-
-            </div>
-
-            <div class="glass rounded-3xl p-5">
-
-              <p class="text-gray-400 mb-2">
-                Learning Time
-              </p>
-
-              <h2 class="text-5xl font-black">
-                84h
-              </h2>
-
-            </div>
+            <i class="ri-brain-fill"></i>
 
           </div>
 
-        </div>
+          <h3 class="text-2xl font-bold mb-3">
+            AI Tutor
+          </h3>
 
-      </div>
+          <p class="text-gray-500 leading-relaxed">
 
-      <!-- STATS -->
+            Solve questions instantly with Gemini AI.
 
-      <div class="grid md:grid-cols-2 xl:grid-cols-4 gap-8 mb-8">
-
-        <!-- CARD -->
-
-        <div class="glass rounded-[35px] p-8 hover-card">
-
-          <div class="flex items-center justify-between mb-8">
-
-            <div class="w-20 h-20 rounded-3xl bg-gradient-to-r from-cyan-500 to-blue-500 flex items-center justify-center text-4xl">
-
-              <i class="ri-brain-fill"></i>
-
-            </div>
-
-            <i class="ri-arrow-right-up-line text-3xl text-cyan-400"></i>
-
-          </div>
-
-          <h2 class="text-6xl font-black mb-2">
-            256
-          </h2>
-
-          <p class="text-gray-400 text-lg">
-            AI Questions Solved
           </p>
-
-        </div>
-
-        <!-- CARD -->
-
-        <div class="glass rounded-[35px] p-8 hover-card">
-
-          <div class="flex items-center justify-between mb-8">
-
-            <div class="w-20 h-20 rounded-3xl bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center text-4xl">
-
-              <i class="ri-book-open-fill"></i>
-
-            </div>
-
-            <i class="ri-arrow-right-up-line text-3xl text-purple-400"></i>
-
-          </div>
-
-          <h2 class="text-6xl font-black mb-2">
-            18
-          </h2>
-
-          <p class="text-gray-400 text-lg">
-            Subjects Learned
-          </p>
-
-        </div>
-
-        <!-- CARD -->
-
-        <div class="glass rounded-[35px] p-8 hover-card">
-
-          <div class="flex items-center justify-between mb-8">
-
-            <div class="w-20 h-20 rounded-3xl bg-gradient-to-r from-blue-500 to-indigo-500 flex items-center justify-center text-4xl">
-
-              <i class="ri-time-fill"></i>
-
-            </div>
-
-            <i class="ri-arrow-right-up-line text-3xl text-blue-400"></i>
-
-          </div>
-
-          <h2 class="text-6xl font-black mb-2">
-            84h
-          </h2>
-
-          <p class="text-gray-400 text-lg">
-            Study Time
-          </p>
-
-        </div>
-
-        <!-- CARD -->
-
-        <div class="glass rounded-[35px] p-8 hover-card">
-
-          <div class="flex items-center justify-between mb-8">
-
-            <div class="w-20 h-20 rounded-3xl bg-gradient-to-r from-pink-500 to-purple-500 flex items-center justify-center text-4xl">
-
-              <i class="ri-trophy-fill"></i>
-
-            </div>
-
-            <i class="ri-arrow-right-up-line text-3xl text-pink-400"></i>
-
-          </div>
-
-          <h2 class="text-6xl font-black mb-2">
-            #1
-          </h2>
-
-          <p class="text-gray-400 text-lg">
-            Learning Rank
-          </p>
-
-        </div>
-
-      </div>
-
-      <!-- CHART + HISTORY -->
-
-      <div class="grid xl:grid-cols-3 gap-8">
-
-        <!-- CHART -->
-
-        <div class="glass rounded-[40px] p-8 xl:col-span-2 glow">
-
-          <div class="flex items-center justify-between mb-10">
-
-            <div>
-
-              <p class="text-cyan-400 uppercase tracking-[4px] mb-2">
-                Analytics
-              </p>
-
-              <h2 class="text-4xl font-black">
-                Learning Progress
-              </h2>
-
-            </div>
-
-            <button class="glass px-6 py-3 rounded-2xl hover:scale-105 transition">
-
-              Weekly
-
-            </button>
-
-          </div>
-
-          <canvas id="learningChart"></canvas>
 
         </div>
 
         <!-- HISTORY -->
 
-        <div class="glass rounded-[40px] p-8 glow">
+        <div
+          class="glass rounded-[28px] p-7 card-hover"
+        >
 
-          <div class="flex items-center justify-between mb-10">
+          <div class="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center text-3xl mb-6 border border-white/5">
 
-            <div>
-
-              <p class="text-cyan-400 uppercase tracking-[4px] mb-2">
-                Recent
-              </p>
-
-              <h2 class="text-4xl font-black">
-                Activity
-              </h2>
-
-            </div>
+            <i class="ri-history-fill"></i>
 
           </div>
 
-          <!-- ITEMS -->
+          <h3 class="text-2xl font-bold mb-3">
+            History
+          </h3>
 
-          <div class="space-y-5">
+          <p class="text-gray-500 leading-relaxed">
 
-            <div class="glass rounded-3xl p-5 hover-card">
+            Revisit previous AI conversations and answers.
 
-              <div class="flex items-center gap-4">
+          </p>
 
-                <div class="w-14 h-14 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-500 flex items-center justify-center text-2xl">
+        </div>
 
-                  <i class="ri-calculator-fill"></i>
+        <!-- ACHIEVEMENTS -->
 
-                </div>
+        <div
+          class="glass rounded-[28px] p-7 card-hover"
+        >
 
-                <div>
+          <div class="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center text-3xl mb-6 border border-white/5">
 
-                  <h3 class="text-xl font-bold">
-                    Algebra Problem
-                  </h3>
+            <i class="ri-medal-fill"></i>
 
-                  <p class="text-gray-400">
-                    Solved 2 hours ago
-                  </p>
+          </div>
 
-                </div>
+          <h3 class="text-2xl font-bold mb-3">
+            Achievements
+          </h3>
 
-              </div>
+          <p class="text-gray-500 leading-relaxed">
 
-            </div>
+            Build streaks and improve your learning performance.
 
-            <div class="glass rounded-3xl p-5 hover-card">
+          </p>
 
-              <div class="flex items-center gap-4">
+        </div>
 
-                <div class="w-14 h-14 rounded-2xl bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center text-2xl">
+        <!-- REALTIME -->
 
-                  <i class="ri-flask-fill"></i>
+        <div
+          class="glass rounded-[28px] p-7 card-hover"
+        >
 
-                </div>
+          <div class="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center text-3xl mb-6 border border-white/5">
 
-                <div>
+            <i class="ri-flashlight-fill"></i>
 
-                  <h3 class="text-xl font-bold">
-                    Chemistry Diagram
-                  </h3>
+          </div>
 
-                  <p class="text-gray-400">
-                    Solved yesterday
-                  </p>
+          <h3 class="text-2xl font-bold mb-3">
+            Live AI
+          </h3>
 
-                </div>
+          <p class="text-gray-500 leading-relaxed">
 
-              </div>
+            Dashboard updates instantly while you learn.
 
-            </div>
+          </p>
 
-            <div class="glass rounded-3xl p-5 hover-card">
+        </div>
 
-              <div class="flex items-center gap-4">
+      </section>
 
-                <div class="w-14 h-14 rounded-2xl bg-gradient-to-r from-blue-500 to-indigo-500 flex items-center justify-center text-2xl">
+      <!-- PROGRESS -->
 
-                  <i class="ri-rocket-fill"></i>
+      <section
+        id="progress"
+        class="grid lg:grid-cols-3 gap-6 mb-10"
+      >
 
-                </div>
+        <!-- CHART -->
 
-                <div>
+        <div class="glass rounded-[32px] p-8 lg:col-span-2">
 
-                  <h3 class="text-xl font-bold">
-                    Physics Question
-                  </h3>
+          <div class="flex items-center justify-between mb-8">
 
-                  <p class="text-gray-400">
-                    Solved 3 days ago
-                  </p>
+            <h3 class="text-3xl font-black">
+              Live Learning Progress
+            </h3>
 
-                </div>
+            <button class="px-5 py-2 rounded-full glass text-sm">
 
-              </div>
+              Realtime
 
-            </div>
+            </button>
+
+          </div>
+
+          <canvas id="progressChart"></canvas>
+
+        </div>
+
+        <!-- ACTIVITY -->
+
+        <div
+          id="activity"
+          class="glass rounded-[32px] p-8"
+        >
+
+          <h3 class="text-3xl font-black mb-8">
+            Recent Activity
+          </h3>
+
+          <div class="text-gray-500">
+
+            No activity yet.
 
           </div>
 
         </div>
 
-      </div>
+      </section>
 
-    </main>
+    </div>
 
-  </div>
+  </main>
 
-  <!-- GSAP -->
+  <!-- CONFIG -->
+
+  <script src="js/config.js"></script>
+
+  <!-- AUTH -->
+
+  <script src="js/auth.js"></script>
 
   <script>
 
-    gsap.from(".glass",{
-      opacity:0,
-      y:50,
-      stagger:0.08,
-      duration:1
-    });
+    // =========================
+    // SUPABASE
+    // =========================
 
-    gsap.from("h1,h2,p",{
-      opacity:0,
-      y:30,
-      stagger:0.05,
-      duration:1
-    });
+    const supabase =
+    window.supabase.createClient(
+      CONFIG.SUPABASE_URL,
+      CONFIG.SUPABASE_ANON_KEY
+    );
 
-    gsap.from("button",{
-      scale:0,
-      opacity:0,
-      stagger:0.1,
-      duration:0.8
-    });
+    // =========================
+    // USER
+    // =========================
 
+    async function loadUser(){
+
+      const user = await checkUser();
+
+      if(user){
+
+        const name =
+        user.user_metadata.full_name || "Student";
+
+        document.getElementById(
+          "userName"
+        ).innerText = name;
+
+        updateAIStats(user.id);
+
+        loadRealtimeData(user.id);
+
+      }
+
+    }
+
+    loadUser();
+
+    // =========================
     // CHART
+    // =========================
 
-    const ctx = document.getElementById('learningChart');
+    const ctx =
+    document
+    .getElementById("progressChart");
 
+    const progressChart =
     new Chart(ctx, {
 
       type: 'line',
 
       data: {
 
-        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+        labels: [],
 
         datasets: [{
 
-          label: 'Problems Solved',
+          label: 'Questions Solved',
 
-          data: [12, 19, 15, 25, 22, 30, 40],
+          data: [],
 
-          borderColor: '#8b5cf6',
+          borderColor: '#ffffff',
 
-          backgroundColor: 'rgba(139,92,246,0.2)',
+          borderWidth: 3,
 
-          tension:0.4,
+          tension: 0.4,
 
-          fill:true
+          fill: false,
+
+          pointRadius: 5,
+
+          pointBackgroundColor: '#ffffff'
 
         }]
 
@@ -792,36 +637,50 @@
 
       options: {
 
-        responsive:true,
+        responsive: true,
 
-        plugins:{
-          legend:{
-            labels:{
-              color:'white'
-            }
-          }
+        animation:{
+          duration:1000
         },
 
-        scales:{
+        plugins: {
 
-          x:{
-            ticks:{
-              color:'white'
+          legend: {
+
+            labels: {
+              color: '#ffffff'
+            }
+
+          }
+
+        },
+
+        scales: {
+
+          y: {
+
+            beginAtZero:true,
+
+            ticks: {
+              color: '#888'
             },
 
-            grid:{
-              color:'rgba(255,255,255,0.05)'
+            grid: {
+              color: 'rgba(255,255,255,0.05)'
             }
+
           },
 
-          y:{
-            ticks:{
-              color:'white'
+          x: {
+
+            ticks: {
+              color: '#888'
             },
 
-            grid:{
-              color:'rgba(255,255,255,0.05)'
+            grid: {
+              color: 'rgba(255,255,255,0.05)'
             }
+
           }
 
         }
@@ -830,7 +689,313 @@
 
     });
 
+    // =========================
+    // AI STATS
+    // =========================
+
+    async function updateAIStats(userId){
+
+      const {
+        data:messages,
+        error
+      } = await supabase
+
+      .from("chat_history")
+
+      .select("*")
+
+      .eq("user_id", userId)
+
+      .order(
+        "created_at",
+        {
+          ascending:true
+        }
+      );
+
+      if(error){
+
+        console.log(error);
+        return;
+
+      }
+
+      const totalQuestions =
+      messages.length;
+
+      let accuracy =
+      Math.min(
+        100,
+        50 + (totalQuestions * 2)
+      );
+
+      let understanding =
+      Math.min(
+        100,
+        40 + (totalQuestions * 3)
+      );
+
+      let streak = 1;
+
+      if(messages.length > 1){
+
+        let previousDate = null;
+
+        messages.forEach(msg => {
+
+          const currentDate =
+          new Date(
+            msg.created_at
+          ).toDateString();
+
+          if(
+            currentDate !== previousDate
+          ){
+
+            streak++;
+
+            previousDate =
+            currentDate;
+
+          }
+
+        });
+
+      }
+
+      document.getElementById(
+        "accuracyText"
+      ).innerText =
+      accuracy + "%";
+
+      document.getElementById(
+        "accuracyBar"
+      ).style.width =
+      accuracy + "%";
+
+      document.getElementById(
+        "understandingText"
+      ).innerText =
+      understanding + "%";
+
+      document.getElementById(
+        "understandingBar"
+      ).style.width =
+      understanding + "%";
+
+      document.getElementById(
+        "streakText"
+      ).innerText =
+      streak + " Days";
+
+      document.getElementById(
+        "streakBar"
+      ).style.width =
+      Math.min(
+        streak * 10,
+        100
+      ) + "%";
+
+    }
+
+    // =========================
+    // REALTIME DATA
+    // =========================
+
+    async function loadRealtimeData(userId){
+
+      const {
+        data:messages,
+        error
+      } = await supabase
+
+      .from("chat_history")
+
+      .select("*")
+
+      .eq("user_id", userId)
+
+      .order(
+        "created_at",
+        {
+          ascending:true
+        }
+      );
+
+      if(error){
+
+        console.log(error);
+        return;
+
+      }
+
+      progressChart.data.labels = [];
+      progressChart.data.datasets[0].data = [];
+
+      messages.forEach((msg,index)=>{
+
+        const time =
+        new Date(
+          msg.created_at
+        ).toLocaleTimeString();
+
+        progressChart.data.labels.push(
+          time
+        );
+
+        progressChart.data.datasets[0].data.push(
+          index + 1
+        );
+
+      });
+
+      progressChart.update();
+
+      const activityBox =
+      document.getElementById(
+        "activity"
+      );
+
+      let html = `
+        <h3 class="text-3xl font-black mb-8">
+          Recent Activity
+        </h3>
+        <div class="space-y-5">
+      `;
+
+      messages
+      .slice(-5)
+      .reverse()
+      .forEach(msg => {
+
+        html += `
+
+        <div class="flex items-start gap-4">
+
+          <div class="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center">
+
+            <i class="ri-brain-fill"></i>
+
+          </div>
+
+          <div>
+
+            <h4 class="font-semibold">
+              ${msg.question || "AI Question"}
+            </h4>
+
+            <p class="text-gray-500 text-sm">
+              ${new Date(
+                msg.created_at
+              ).toLocaleString()}
+            </p>
+
+          </div>
+
+        </div>
+
+        `;
+
+      });
+
+      html += `</div>`;
+
+      activityBox.innerHTML = html;
+
+    }
+
+    // =========================
+    // REALTIME SUBSCRIPTION
+    // =========================
+
+    supabase
+
+    .channel("realtime-dashboard")
+
+    .on(
+      "postgres_changes",
+      {
+
+        event:"INSERT",
+
+        schema:"public",
+
+        table:"chat_history"
+
+      },
+
+      async () => {
+
+        const {
+          data:{ session }
+        } = await supabase.auth.getSession();
+
+        if(session){
+
+          updateAIStats(
+            session.user.id
+          );
+
+          loadRealtimeData(
+            session.user.id
+          );
+
+        }
+
+      }
+
+    )
+
+    .subscribe();
+
+    // =========================
+    // SCROLL
+    // =========================
+
+    function scrollToSection(id){
+
+      document
+      .getElementById(id)
+      .scrollIntoView({
+
+        behavior:'smooth'
+
+      });
+
+    }
+
+    // =========================
+    // GSAP
+    // =========================
+
+    gsap.from("nav",{
+
+      y:-100,
+      opacity:0,
+      duration:1
+
+    });
+
+    gsap.from("h1,h2,h3",{
+
+      y:50,
+      opacity:0,
+      duration:1,
+      stagger:0.1
+
+    });
+
+    gsap.from(".glass",{
+
+      opacity:0,
+      y:40,
+      stagger:0.08,
+      duration:1
+
+    });
+
   </script>
 
 </body>
+
 </html>
