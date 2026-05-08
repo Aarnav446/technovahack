@@ -1,20 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
   <title>AIEDU - Login</title>
 
-  <!-- Tailwind CSS -->
+  <!-- Tailwind -->
+
   <script src="https://cdn.tailwindcss.com"></script>
 
   <!-- Remix Icons -->
+
   <link
     href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css"
     rel="stylesheet"
   />
 
   <!-- GSAP -->
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 
   <style>
@@ -24,133 +30,116 @@
       padding:0;
       box-sizing:border-box;
       font-family:Arial, Helvetica, sans-serif;
+      scroll-behavior:smooth;
     }
 
     body{
-      background:#030712;
-      overflow-x:hidden;
+      background:#0a0a0a;
       color:white;
+      overflow-x:hidden;
       min-height:100vh;
       position:relative;
     }
 
-    /* GRID BACKGROUND */
+    /* GRID */
 
-    body::before{
-      content:'';
-      position:fixed;
-      inset:0;
+    .grid-bg{
 
       background-image:
-      linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
 
       background-size:50px 50px;
-      z-index:-3;
+
     }
 
-    /* GRADIENT BLOBS */
-
-    .blob{
-      position:absolute;
-      border-radius:50%;
-      filter:blur(120px);
-      opacity:0.4;
-      z-index:-2;
-    }
-
-    .blob1{
-      width:350px;
-      height:350px;
-      background:#7c3aed;
-      top:-100px;
-      left:-100px;
-    }
-
-    .blob2{
-      width:300px;
-      height:300px;
-      background:#06b6d4;
-      bottom:-100px;
-      right:-100px;
-    }
-
-    .blob3{
-      width:250px;
-      height:250px;
-      background:#2563eb;
-      top:50%;
-      left:40%;
-    }
-
-    /* GLASS EFFECT */
+    /* GLASS */
 
     .glass{
-      background:rgba(255,255,255,0.05);
-      backdrop-filter:blur(25px);
-      -webkit-backdrop-filter:blur(25px);
 
-      border:1px solid rgba(255,255,255,0.08);
+      background:rgba(255,255,255,0.03);
+
+      backdrop-filter:blur(18px);
+      -webkit-backdrop-filter:blur(18px);
+
+      border:1px solid rgba(255,255,255,0.06);
 
       box-shadow:
-      0 8px 32px rgba(0,0,0,0.35),
-      inset 0 0 20px rgba(255,255,255,0.03);
+      0 4px 20px rgba(255,255,255,0.03);
+
     }
 
-    /* GLOW */
-
-    .glow{
-      box-shadow:
-      0 0 25px rgba(124,58,237,0.35),
-      0 0 50px rgba(6,182,212,0.2);
-    }
-
-    /* TEXT GRADIENT */
+    /* TEXT */
 
     .gradient-text{
-      background:linear-gradient(to right,#60a5fa,#8b5cf6,#22d3ee);
+
+      background:linear-gradient(to right,#ffffff,#9ca3af);
+
       -webkit-background-clip:text;
       -webkit-text-fill-color:transparent;
+
+    }
+
+    /* BLUR BALL */
+
+    .blur-ball{
+
+      position:absolute;
+
+      width:220px;
+      height:220px;
+
+      border-radius:50%;
+
+      filter:blur(120px);
+
+      opacity:0.08;
+
+      z-index:-1;
+
     }
 
     /* INPUT */
 
     .input-box{
+
       width:100%;
-      padding:18px 20px 18px 60px;
-      border-radius:18px;
-      background:rgba(255,255,255,0.04);
-      border:1px solid rgba(255,255,255,0.08);
-      color:white;
-      font-size:17px;
+
+      background:rgba(255,255,255,0.03);
+
+      border:1px solid rgba(255,255,255,0.06);
+
       outline:none;
+
+      padding:18px 20px 18px 58px;
+
+      border-radius:18px;
+
+      color:white;
+
       transition:0.3s;
+
     }
 
     .input-box:focus{
-      border-color:#8b5cf6;
-      box-shadow:0 0 20px rgba(139,92,246,0.3);
+
+      border-color:rgba(255,255,255,0.18);
+
+      background:rgba(255,255,255,0.05);
+
     }
 
-    /* FLOAT */
+    /* HOVER */
 
-    .float{
-      animation:float 5s ease-in-out infinite;
+    .hover-card{
+      transition:0.3s;
     }
 
-    @keyframes float{
+    .hover-card:hover{
 
-      0%{
-        transform:translateY(0px);
-      }
+      transform:translateY(-5px);
 
-      50%{
-        transform:translateY(-12px);
-      }
-
-      100%{
-        transform:translateY(0px);
-      }
+      border-color:rgba(255,255,255,0.12);
 
     }
 
@@ -161,7 +150,7 @@
     }
 
     ::-webkit-scrollbar-thumb{
-      background:#7c3aed;
+      background:#27272a;
       border-radius:20px;
     }
 
@@ -169,114 +158,115 @@
 
 </head>
 
-<body>
+<body class="grid-bg">
 
-  <!-- BACKGROUND BLOBS -->
+  <!-- BLURS -->
 
-  <div class="blob blob1"></div>
-  <div class="blob blob2"></div>
-  <div class="blob blob3"></div>
+  <div class="blur-ball bg-white top-0 left-0"></div>
+  <div class="blur-ball bg-zinc-700 bottom-0 right-0"></div>
 
   <!-- NAVBAR -->
 
-  <nav class="w-full fixed top-5 z-50 px-5">
+  <nav class="fixed top-5 left-1/2 -translate-x-1/2 z-50 w-[92%] max-w-7xl">
 
-    <div class="max-w-7xl mx-auto">
+    <div class="glass rounded-full px-7 py-4 flex items-center justify-between">
 
-      <div class="glass rounded-full px-8 py-5 flex items-center justify-between glow">
+      <!-- LOGO -->
 
-        <!-- LOGO -->
+      <div class="flex items-center gap-3">
 
-        <div class="flex items-center gap-3">
+        <div class="w-11 h-11 rounded-2xl bg-white text-black flex items-center justify-center text-lg font-bold">
 
-          <div class="w-12 h-12 rounded-2xl bg-gradient-to-r from-cyan-500 to-purple-600 flex items-center justify-center text-2xl">
-
-            <i class="ri-quill-pen-ai-fill"></i>
-
-          </div>
-
-          <h1 class="text-3xl font-black gradient-text">
-            AIEDU
-          </h1>
+          A
 
         </div>
 
-        <!-- MENU -->
-
-        <div class="hidden md:flex items-center gap-10 text-gray-300">
-
-          <a href="#" class="hover:text-cyan-400 transition">
-            Home
-          </a>
-
-          <a href="#" class="hover:text-cyan-400 transition">
-            Features
-          </a>
-
-          <a href="#" class="hover:text-cyan-400 transition">
-            Contact
-          </a>
-
-        </div>
-
-        <!-- BUTTON -->
-
-        <button class="px-7 py-3 rounded-full bg-gradient-to-r from-cyan-500 to-purple-600 font-semibold hover:scale-105 transition duration-300">
-
-          Get Started
-
-        </button>
+        <h1 class="text-2xl font-semibold tracking-wide text-white">
+          AIEDU
+        </h1>
 
       </div>
+
+      <!-- MENU -->
+
+      <ul class="hidden md:flex items-center gap-8 text-gray-400 font-medium text-sm">
+
+        <li class="hover:text-white transition cursor-pointer">
+          Home
+        </li>
+
+        <li class="hover:text-white transition cursor-pointer">
+          Features
+        </li>
+
+        <li class="hover:text-white transition cursor-pointer">
+          About
+        </li>
+
+        <li class="hover:text-white transition cursor-pointer">
+          Contact
+        </li>
+
+      </ul>
+
+      <!-- BUTTON -->
+
+      <button class="px-6 py-3 rounded-full bg-white text-black font-medium hover:scale-105 transition duration-300">
+
+        Sign Up
+
+      </button>
 
     </div>
 
   </nav>
 
-  <!-- MAIN SECTION -->
+  <!-- MAIN -->
 
-  <section class="min-h-screen flex items-center justify-center px-6 py-40">
+  <section class="min-h-screen flex items-center justify-center px-6 pt-40 pb-20">
 
-    <div class="max-w-7xl w-full grid lg:grid-cols-2 gap-20 items-center">
+    <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center w-full">
 
-      <!-- LEFT SIDE -->
+      <!-- LEFT -->
 
       <div>
 
-        <p class="text-cyan-400 uppercase tracking-[5px] mb-5 text-lg">
+        <p class="text-gray-500 uppercase tracking-[4px] mb-4 text-sm">
+
           Welcome Back
+
         </p>
 
-        <h1 class="text-6xl md:text-8xl font-black leading-none mb-8">
+        <h1 class="text-5xl md:text-6xl font-black leading-[1.05] mb-6">
 
           Continue
           <br>
 
           Your
           <span class="gradient-text">
-            AI
+            AI Learning
           </span>
 
-          Learning.
+          Journey.
 
         </h1>
 
-        <p class="text-gray-300 text-xl leading-relaxed max-w-2xl mb-12">
+        <p class="text-gray-400 text-base leading-relaxed mb-8 max-w-lg">
 
-          Access your smart AI dashboard, solve handwritten problems,
-          and continue learning with personalized AI tutoring.
+          Access your AI dashboard, continue solving handwritten
+          problems, and learn smarter with personalized AI assistance.
 
         </p>
 
         <!-- FEATURES -->
 
-        <div class="space-y-6">
+        <div class="space-y-4">
 
-          <!-- ITEM -->
+          <!-- CARD -->
 
-          <div class="glass rounded-[30px] p-6 flex items-center gap-5 hover:scale-[1.02] transition duration-300">
+          <div class="glass rounded-[24px] p-5 flex items-center gap-5 border border-white/5 hover-card">
 
-            <div class="w-16 h-16 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-500 flex items-center justify-center text-3xl">
+            <div class="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center text-2xl border border-white/5">
 
               <i class="ri-ai-generate"></i>
 
@@ -284,23 +274,25 @@
 
             <div>
 
-              <h3 class="text-2xl font-bold mb-1">
+              <h3 class="text-xl font-semibold mb-1">
                 AI Whiteboard
               </h3>
 
-              <p class="text-gray-400">
-                Draw equations and get instant AI explanations.
+              <p class="text-gray-500 text-sm">
+
+                Draw and solve problems instantly.
+
               </p>
 
             </div>
 
           </div>
 
-          <!-- ITEM -->
+          <!-- CARD -->
 
-          <div class="glass rounded-[30px] p-6 flex items-center gap-5 hover:scale-[1.02] transition duration-300">
+          <div class="glass rounded-[24px] p-5 flex items-center gap-5 border border-white/5 hover-card">
 
-            <div class="w-16 h-16 rounded-2xl bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center text-3xl">
+            <div class="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center text-2xl border border-white/5">
 
               <i class="ri-lightbulb-flash-fill"></i>
 
@@ -308,23 +300,25 @@
 
             <div>
 
-              <h3 class="text-2xl font-bold mb-1">
-                Smart Solutions
+              <h3 class="text-xl font-semibold mb-1">
+                Smart AI Explanations
               </h3>
 
-              <p class="text-gray-400">
-                AI-generated step-by-step problem solving.
+              <p class="text-gray-500 text-sm">
+
+                Step-by-step learning support.
+
               </p>
 
             </div>
 
           </div>
 
-          <!-- ITEM -->
+          <!-- CARD -->
 
-          <div class="glass rounded-[30px] p-6 flex items-center gap-5 hover:scale-[1.02] transition duration-300">
+          <div class="glass rounded-[24px] p-5 flex items-center gap-5 border border-white/5 hover-card">
 
-            <div class="w-16 h-16 rounded-2xl bg-gradient-to-r from-blue-500 to-indigo-500 flex items-center justify-center text-3xl">
+            <div class="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center text-2xl border border-white/5">
 
               <i class="ri-book-open-fill"></i>
 
@@ -332,12 +326,14 @@
 
             <div>
 
-              <h3 class="text-2xl font-bold mb-1">
+              <h3 class="text-xl font-semibold mb-1">
                 Personalized Learning
               </h3>
 
-              <p class="text-gray-400">
-                AI adapts explanations to your learning style.
+              <p class="text-gray-500 text-sm">
+
+                AI adapts to your learning style.
+
               </p>
 
             </div>
@@ -348,47 +344,53 @@
 
       </div>
 
-      <!-- RIGHT LOGIN CARD -->
+      <!-- RIGHT -->
 
       <div class="flex justify-center">
 
-        <div class="glass rounded-[40px] p-10 md:p-12 w-full max-w-[550px] glow float">
+        <div class="glass rounded-[32px] p-8 md:p-10 w-full max-w-[470px] border border-white/5">
 
           <!-- HEADER -->
 
-          <div class="text-center mb-10">
+          <div class="text-center mb-8">
 
-            <div class="w-24 h-24 mx-auto rounded-[30px] bg-gradient-to-r from-cyan-500 to-purple-600 flex items-center justify-center text-5xl mb-6">
+            <div class="w-20 h-20 mx-auto rounded-[24px] bg-white text-black flex items-center justify-center text-4xl mb-5">
 
               <i class="ri-user-smile-fill"></i>
 
             </div>
 
-            <h2 class="text-5xl font-black mb-4">
+            <h2 class="text-4xl font-black mb-3">
+
               Login
+
             </h2>
 
-            <p class="text-gray-400 text-lg">
-              Sign in to continue your learning journey
+            <p class="text-gray-500">
+
+              Continue your AI learning experience
+
             </p>
 
           </div>
 
           <!-- FORM -->
 
-          <form class="space-y-7">
+          <form class="space-y-5">
 
             <!-- EMAIL -->
 
             <div>
 
-              <label class="block mb-3 text-lg text-gray-300">
+              <label class="block text-sm text-gray-400 mb-3">
+
                 Email Address
+
               </label>
 
               <div class="relative">
 
-                <i class="ri-mail-fill absolute left-5 top-1/2 -translate-y-1/2 text-xl text-gray-400"></i>
+                <i class="ri-mail-line absolute left-5 top-1/2 -translate-y-1/2 text-gray-500 text-xl"></i>
 
                 <input
                   type="email"
@@ -404,13 +406,15 @@
 
             <div>
 
-              <label class="block mb-3 text-lg text-gray-300">
+              <label class="block text-sm text-gray-400 mb-3">
+
                 Password
+
               </label>
 
               <div class="relative">
 
-                <i class="ri-lock-fill absolute left-5 top-1/2 -translate-y-1/2 text-xl text-gray-400"></i>
+                <i class="ri-lock-line absolute left-5 top-1/2 -translate-y-1/2 text-gray-500 text-xl"></i>
 
                 <input
                   type="password"
@@ -424,17 +428,17 @@
 
             <!-- OPTIONS -->
 
-            <div class="flex items-center justify-between text-gray-400">
+            <div class="flex items-center justify-between text-sm">
 
-              <label class="flex items-center gap-2 cursor-pointer">
+              <label class="flex items-center gap-2 text-gray-500">
 
-                <input type="checkbox" class="accent-purple-500">
+                <input type="checkbox" class="accent-white">
 
                 Remember me
 
               </label>
 
-              <a href="#" class="hover:text-cyan-400 transition">
+              <a href="#" class="text-gray-500 hover:text-white transition">
 
                 Forgot Password?
 
@@ -442,11 +446,11 @@
 
             </div>
 
-            <!-- LOGIN BUTTON -->
+            <!-- BUTTON -->
 
             <button
               type="submit"
-              class="w-full py-5 rounded-2xl bg-gradient-to-r from-cyan-500 to-purple-600 text-xl font-bold hover:scale-[1.02] transition duration-300 glow"
+              class="w-full py-4 rounded-full bg-white text-black font-semibold hover:scale-[1.02] transition duration-300"
             >
 
               Login
@@ -456,11 +460,11 @@
 
             <!-- DIVIDER -->
 
-            <div class="flex items-center gap-4">
+            <div class="flex items-center gap-4 py-2">
 
               <div class="flex-1 h-[1px] bg-white/10"></div>
 
-              <span class="text-gray-400">
+              <span class="text-gray-500 text-sm">
                 OR
               </span>
 
@@ -472,10 +476,10 @@
 
             <button
               type="button"
-              class="glass w-full py-5 rounded-2xl text-lg hover:scale-[1.02] transition duration-300 flex items-center justify-center gap-4"
+              class="glass border border-white/5 w-full py-4 rounded-full hover:bg-white/5 transition duration-300 flex items-center justify-center gap-3"
             >
 
-              <i class="ri-google-fill text-2xl"></i>
+              <i class="ri-google-fill text-lg"></i>
 
               Continue with Google
 
@@ -483,11 +487,11 @@
 
             <!-- SIGNUP -->
 
-            <p class="text-center text-gray-400 text-lg pt-2">
+            <p class="text-center text-gray-500 text-sm pt-2">
 
               Don’t have an account?
 
-              <a href="#" class="text-cyan-400 hover:text-purple-400 transition">
+              <a href="#" class="text-white hover:text-gray-300 transition">
 
                 Sign Up
 
@@ -507,27 +511,35 @@
 
   <!-- FOOTER -->
 
-  <footer class="border-t border-white/10 py-10 px-6">
+  <footer class="border-t border-white/10 py-12 px-6">
 
-    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-5">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
 
-      <p class="text-gray-500 text-center md:text-left">
+      <!-- LEFT -->
 
-        © 2026 AIEDU. All Rights Reserved.
+      <div>
 
-      </p>
+        <h2 class="text-2xl font-bold mb-2">
+          AIEDU
+        </h2>
+
+        <p class="text-gray-500">
+          AI Powered Education Platform
+        </p>
+
+      </div>
 
       <!-- SOCIAL -->
 
-      <div class="flex items-center gap-5 text-2xl text-gray-400">
+      <div class="flex gap-5 text-2xl text-gray-500">
 
-        <i class="ri-instagram-line hover:text-pink-500 cursor-pointer transition"></i>
+        <i class="ri-instagram-line hover:text-white transition cursor-pointer"></i>
 
-        <i class="ri-twitter-x-line hover:text-cyan-400 cursor-pointer transition"></i>
+        <i class="ri-twitter-x-line hover:text-white transition cursor-pointer"></i>
 
-        <i class="ri-linkedin-box-fill hover:text-blue-500 cursor-pointer transition"></i>
+        <i class="ri-linkedin-box-fill hover:text-white transition cursor-pointer"></i>
 
-        <i class="ri-github-fill hover:text-white cursor-pointer transition"></i>
+        <i class="ri-github-fill hover:text-white transition cursor-pointer"></i>
 
       </div>
 
@@ -545,29 +557,27 @@
       duration:1
     });
 
-    gsap.from("h1,h2,p",{
+    gsap.from("h1,h2",{
+      y:50,
       opacity:0,
-      y:40,
-      stagger:0.1,
       duration:1
+    });
+
+    gsap.from("p",{
+      opacity:0,
+      duration:1.2,
+      stagger:0.08
     });
 
     gsap.from(".glass",{
       opacity:0,
-      y:60,
-      stagger:0.15,
-      duration:1.2
-    });
-
-    gsap.from("button",{
-      scale:0,
-      opacity:0,
-      stagger:0.2,
-      duration:1,
-      delay:0.4
+      y:40,
+      stagger:0.08,
+      duration:1
     });
 
   </script>
 
 </body>
+
 </html>
